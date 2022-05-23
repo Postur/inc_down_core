@@ -4,8 +4,19 @@ plugins:
   toc:
 ---
 
-# heading 1
+# heading 1.1 {#idks, .fewfew}
 
-## heading 2
+i am a paragraph in heading 1
+
+- list item in in h1
+- second list item
+
+## heading 1.2
+
+paragraph in h2
+
+# head 1.1
+
+## head 1.2
 
 ### head 3

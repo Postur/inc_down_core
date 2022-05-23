@@ -52,11 +52,15 @@ fn main() {
   let mut parser_options = Options::empty();
   parser_options.insert(Options::ENABLE_HEADING_ATTRIBUTES);
 
-  let parser = pulldown_cmark::Parser::new_ext(&content, parser_options);
-  println!("{:?}", parser.into_offset_iter().nth(1).unwrap().0);
+  let mut parser = pulldown_cmark::Parser::new_ext(&content, parser_options);
+  // println!("{:?}", parser.)
+  for idk in parser.by_ref() {
+    println!("{:?}", idk);
+  }
+  // println!("{:?}", parser.into_offset_iter().nth(1).unwrap().0);
 
   let mut html_output = String::new();
-  // html::push_html(&mut html_output, parser);
+  html::push_html(&mut html_output, parser);
   fs::write(output_file, html_output).expect("Failed to write file");
   return;
   // let markdown_input = "# Hello world\nThis is a ~~complicated~~ *very simple* example.";
