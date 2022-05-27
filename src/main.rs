@@ -1,5 +1,6 @@
 use clap::Parser;
 use pulldown_cmark::{html, Options};
+use std::io::Write as _;
 use std::{env, fs, path::PathBuf};
 
 #[derive(Parser, Debug)]
@@ -24,7 +25,6 @@ struct Args {
 fn parse(input: PathBuf) -> String {
   let file_contents = fs::read_to_string(input).expect("Could not read file");
   // parse file_contents info front_matter and content
-
   // register plugins from markdown front_matter
 
   // run content through plugins
@@ -52,31 +52,22 @@ fn main() {
   let mut parser_options = Options::empty();
   parser_options.insert(Options::ENABLE_HEADING_ATTRIBUTES);
 
-  let mut parser = pulldown_cmark::Parser::new_ext(&content, parser_options);
-  // println!("{:?}", parser.)
-  for idk in parser.by_ref() {
-    println!("{:?}", idk);
-  }
-  // println!("{:?}", parser.into_offset_iter().nth(1).unwrap().0);
+  let parser = pulldown_cmark::Parser::new_ext(&content, parser_options).map(|event| match event {
+    pulldown_cmark::Event::Text(text) => {
+      pulldown_cmark::Event::Text(text.replace("Peter", "John").into())
+    }
+    pulldown_cmark::Event::Start => {
+      println!("Heading found")
+    }
+    _ => event,
+  });
+
+  // for idk in parser.into_offset_iter().collect::<Vec<_>>() {
+  //   println!("{:#?}", &idk);
+  // }
 
   let mut html_output = String::new();
   html::push_html(&mut html_output, parser);
   fs::write(output_file, html_output).expect("Failed to write file");
   return;
-  // let markdown_input = "# Hello world\nThis is a ~~complicated~~ *very simple* example.";
-
-  // // Set up options and parser. Strikethroughs are not part of the CommonMark standard
-  // // and we therefore must enable it explicitly.
-  // let mut options = Options::empty();
-  // options.insert(Options::ENABLE_STRIKETHROUGH);
-
-  // // Write to String buffer.
-  // let mut html_output = String::new();
-  // html::push_html(&mut html_output, parser);
-
-  // // Check that the output is what we expected.
-  // let expected_html =
-  //   "<h1>Hello world</h1>\n<p>This is a <del>complicated</del> <em>very simple</em> example.</p>\n";
-  // assert_eq!(expected_html, &html_output);
-  // println!("{}", html_output);
 }

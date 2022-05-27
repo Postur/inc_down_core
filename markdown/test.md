@@ -1,9 +1,3 @@
----
-plugins:
-  include:
-  toc:
----
-
 # heading 1.1 {#idks, .fewfew}
 
 i am a paragraph in heading 1
@@ -19,4 +13,6 @@ paragraph in h2
 
 ## head 1.2
 
-### head 3
+### peter 3
+
+Peter
