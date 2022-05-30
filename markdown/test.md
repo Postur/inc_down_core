@@ -1,4 +1,4 @@
-# heading 1.1 {#idks, .fewfew}
+# heading 1.1 {#html_id_attr .class_for_heading}
 
 i am a paragraph in heading 1
 

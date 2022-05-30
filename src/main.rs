@@ -32,6 +32,12 @@ fn parse(input: PathBuf) -> String {
   // return contents
   contents
 }
+
+pub enum EventExt<'a> {
+  Event(pulldown_cmark::Event<'a>),
+  FunctionCall,
+}
+
 fn main() {
   let args = Args::parse();
   let input_file = args.input;
@@ -53,15 +59,12 @@ fn main() {
   parser_options.insert(Options::ENABLE_HEADING_ATTRIBUTES);
 
   let parser = pulldown_cmark::Parser::new_ext(&content, parser_options).map(|event| match event {
-    pulldown_cmark::Event::Text(text) => {
-      pulldown_cmark::Event::Text(text.replace("Peter", "John").into())
+    pulldown_cmark::Event::Rule => event,
+    _ => {
+      println!("{:#?}", event);
+      event
     }
-    pulldown_cmark::Event::Start => {
-      println!("Heading found")
-    }
-    _ => event,
   });
-
   // for idk in parser.into_offset_iter().collect::<Vec<_>>() {
   //   println!("{:#?}", &idk);
   // }
