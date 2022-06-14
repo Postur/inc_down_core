@@ -1,0 +1,5 @@
+\plugin(odeon)
+\plugin(hello)
+\arguments(this, has, many, args)
+this is just text Ááð()
+\thiscommand(\usesacommand())
