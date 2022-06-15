@@ -4,11 +4,11 @@ file = {
     EOI 
 }
 char = {
-    !("\"" | "\\") ~ ANY
+    !("\"" | "§") ~ ANY
     | "\\" ~ ("\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t")
     | "\\" ~ ("u" ~ ASCII_HEX_DIGIT{4})
 }
 text = @{char+}
 word = {LETTER+}
-command = {"\\"~word~"("~(word |("," ~ word)| command)*~")"}
+command = {"§"~word~"("~(word |("," ~ word)| command)*~")"}
 WHITESPACE = _{ " " | "\t" | "\r" | "\n" }
